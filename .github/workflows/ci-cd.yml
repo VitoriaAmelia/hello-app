@@ -45,14 +45,24 @@ jobs:
       - name: Update image in manifests and push
         run: |
           cd manifests/hello-app
+<<<<<<< HEAD
           # 🔧 Configura identidade do Git (evita erro de "Author identity unknown")
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
           # Cria branch e faz commit da nova imagem
+=======
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+>>>>>>> 7527d8995f8e7d56c77569bc99c1b84a37a8e95f
           git checkout -b ci/update-image-${{ github.sha }}
           sed -i "s#image: .*#image: ${{ secrets.DOCKER_USERNAME }}/hello-app:sha-${{ github.sha }}#g" deployment.yaml
           git add deployment.yaml
-          git commit -m "ci: update image to sha-${{ github.sha }}"
-          git push origin HEAD
+          if git diff --cached --quiet; then
+            echo "⚪ Nenhuma mudança detectada no deployment.yaml — nada para enviar."
+          else
+            git commit -m "ci: update image to sha-${{ github.sha }}"
+            git push git@github.com:VitoriaAmelia/hello-manifest.git HEAD:ci/update-image-${{ github.sha }}
+            echo "✅ Atualização enviada para hello-manifests com sucesso."
+          fi
         shell: bash
