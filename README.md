@@ -252,7 +252,7 @@ A tela seguinte é semelhante à tela de preenchimento da chave anterior. Nela, 
 
 ---
 
-### 🐳 Adicionar Secrets do Docker Hub
+### 🐳  Adicionar Secrets do Docker Hub
 
 1. Gere um **Personal Access Token** no [Docker Hub → ícone de Perfil  → Account Settings → Personal Access Tokens](https://hub.docker.com/settings/security)
 
@@ -316,25 +316,10 @@ git commit -m "sua mensagem de commit"
 git push
 ```
 
----
-
-## 🧪 6. Testando a automação
-
-1. Edite o arquivo `main.py` (no VSCode ou GitHub)  
-2. Faça commit e push  
-3. Verifique:
-   - ✅ A imagem foi atualizada no **Docker Hub**
-
-<img width="1073" height="553" alt="image" src="https://github.com/user-attachments/assets/5ef90ead-c726-482e-bdac-01541cb36cdc" />
-
-          
-   - ✅ O arquivo `deployment.yaml` foi atualizado com a nova tag da imagem  
-
-<img width="1026" height="596" alt="image" src="https://github.com/user-attachments/assets/2c78707b-db92-4f55-8f60-622fa4212b90" />
 
 ---
 
-## 🧭 7. Acessando o ArgoCD
+## 🧭 5. Acessando o ArgoCD
 
 ### Instalar ArgoCD
 ```bash
@@ -379,7 +364,7 @@ Interface de login:
 
 ---
 
-## 🚀 8. Criar App no ArgoCD
+## 🚀 6. Criar App no ArgoCD
 
 No painel do ArgoCD:
 
@@ -406,11 +391,21 @@ Acesse no navegador para ver:
 
 ---
 
-## 🔁 Teste final
+## 🔁 7. Teste
 
 1. Altere a mensagem no `main.py`
 2. Espere a ação do push
-3. Verifique no ArgoCD:
+3. Verifique:
+   - ✅ A imagem foi atualizada no **Docker Hub**
+
+<img width="1073" height="553" alt="image" src="https://github.com/user-attachments/assets/5ef90ead-c726-482e-bdac-01541cb36cdc" />
+
+          
+   - ✅ O arquivo `deployment.yaml` foi atualizado com a nova tag da imagem  
+
+<img width="1026" height="596" alt="image" src="https://github.com/user-attachments/assets/2c78707b-db92-4f55-8f60-622fa4212b90" />
+
+4. Verifique no ArgoCD:
    - O app ficará **Out of Sync**
 
 <img width="424" height="367" alt="outofsyncteste" src="https://github.com/user-attachments/assets/0c368c6e-e310-4907-81e0-9e882ef78f9d" />
@@ -429,5 +424,9 @@ Acesse no navegador para ver:
 
 <img width="546" height="174" alt="image" src="https://github.com/user-attachments/assets/eefbb9b6-d740-4071-8818-4d2a87c425a5" />
 
+5. Verifique também os pods com `kubectl get pods` para ver se tudo está running:
+   
+   <img width="745" height="360" alt="image" src="https://github.com/user-attachments/assets/aaf26232-5e2a-4ad9-8804-a7f1db97d897" />
 
----
+Obs: Você pode conseguir informações úteis sobre o funcionamento verificando os logs com `kubectl logs -l app=hello-app`
+
