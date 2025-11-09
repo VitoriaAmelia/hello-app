@@ -295,17 +295,83 @@ No repositório **`hello-manifest`**, crie a seguinte estrutura:
 ```
 .github/
 └── workflows/
-    └── ci-cd.yaml
+    └── pipeline.yaml
 ```
 
 Saída esperada no VsCode:
 
-<img width="286" height="133" alt="image" src="https://github.com/user-attachments/assets/8adcb680-d721-4afa-a61d-b511213c85a0" />
+<img width="159" height="106" alt="image" src="https://github.com/user-attachments/assets/b8fccce1-b0f6-4976-8b65-7093d1caf087" />
 
 
-Arquivo **`ci-cd.yaml`**:
+Arquivo **`pipeline.yaml`** com comentários:
 ```yaml
-# código aqui
+name: CI/CD
+
+on:
+  # Dispara automaticamente quando houver push na branch "main"
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  atualiza-imagem-processo:
+    # Sistema operacional usado
+    runs-on: ubuntu-latest
+
+    steps:
+      # Faz o checkout do código atual do repositório
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Configura o ambiente para usar o Docker Buildx
+      - name: Configurar Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Acessa o Docker Hub usando os segredos dos últimos passos
+      - name: Login Docker Hub com Variaveis
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Constrói e envia a imagem para o Docker Hub
+      - name: Build e Push Docker Hub
+        uses: docker/build-push-action@v4
+        with:
+          context: .                      # Usa o diretório atual 
+          push: true                      # Envia a imagem para o Docker Hub
+          tags: ${{ secrets.DOCKER_USERNAME }}/hello-app:sha-${{ github.sha }} # Nomeia a imagem com um código
+
+      # Configura o SSH para poder acessar o repositório hello--manifest
+      - name: Configurar SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Faz checkout do repositório onde estão os manifests
+      - name: Checkout do repositório de manifests
+        uses: actions/checkout@v4
+        with:
+          repository: VitoriaAmelia/hello-manifest  # Repositório de destino
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}   # Usa a chave SSH para autenticar
+          path: manifests                           # Clona dentro da pasta "manifests"
+
+      # Atualiza a imagem no arquivo deployment.yaml do outro repositório e faz commit e push
+      - name: Atualiza imagem
+        run: |
+          cd manifests/hello-app
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout main
+          # Substitui a linha da imagem no arquivo pelo novo SHA
+          sed -i "s#image: .*#image: ${{ secrets.DOCKER_USERNAME }}/hello-app:sha-${{ github.sha }}#g" deployment.yaml
+          git add deployment.yaml
+          # Só faz commit se houver mudanças
+          if ! git diff --cached --quiet; then
+            git commit -m "ci: update image to sha-${{ github.sha }}"
+            git push origin main
+          fi
 ```
 
 No terminal, na pasta hello-manifest, não se esqueça de dar commit:
