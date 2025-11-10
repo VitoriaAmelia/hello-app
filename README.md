@@ -106,19 +106,38 @@ code .           #abre o Vs Code no diretório
 
 Crie os seguintes arquivos dentro da pasta hello-app (no Vs Code ou no terminal):
 
-### 🐳 `Dockerfile`
+### 🐳 `Dockerfile` com comentários:
 ```Dockerfile
-# código aqui
+# Imagem Python
+FROM python:3.11-slim
+
+# Diretório de trabalho 
+WORKDIR /app
+
+# Copia e instala as dependências
+COPY requirements.txt .
+RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
+
+# Copia todo o projeto
+COPY . .
+
+# Porta que o container vai expor
+EXPOSE 80
+
+# Comando para rodar a aplicação
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
 ```
 
-### 🐍 `main.py`
+### 🐍 `main.py` com comentários:
 ```python
 # código aqui
 ```
 
-### 📦 `requirements.txt`
+### 📦 `requirements.txt` com comentários:
 ```txt
-# código aqui
+# Dependências usadas pelo Dockerfile
+fastapi
+uvicorn[standard]
 ```
 
 **Os três arquivos:**
@@ -139,7 +158,7 @@ Voltando ao terminal, na pasta hello-app, não se esqueça de adicionar o novo c
 
 ```bash
 git add .
-git commit -m “sua mensagme de commit”
+git commit -m “sua mensagem de commit”
 git push
 ```
 ---
