@@ -555,9 +555,11 @@ Acesse no navegador para ver:
 <img width="427" height="369" alt="voltou a ficar sync" src="https://github.com/user-attachments/assets/7238983c-20e7-42b3-8abc-f0f77ddf3dcb" />
 
 
-   - A nova mensagem aparecerá em `http://localhost:30080/` e `http://localhost:30080/hello/seunome`
+   - A nova mensagem aparecerá em `http://localhost:30080/`:
 
 <img width="920" height="580" alt="image" src="https://github.com/user-attachments/assets/ebfb248b-1c14-4e13-8586-176cb7fd8a88" />
+
+  - A nova mensagem também aparecerá em `http://localhost:30080/hello/seunome`:
 
 <img width="955" height="589" alt="image" src="https://github.com/user-attachments/assets/52051414-1c10-4189-a715-1742ba75aee5" />
 
