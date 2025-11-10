@@ -636,7 +636,7 @@ No painel do ArgoCD:
 2. Configure:
    - **Application name:** `hello-app`
    - **Project:** `default`
-   - **Sync policy:** automática (como no último projeto)
+   - **Sync policy:** automática: Enable Auto-Sync, Prune Resources, Self Heal, Set Deletion Finalizer, Auto-Create Namespace
    - **Repository URL:** seu repositório `hello-manifest`
    - **Revision:** `main`
    - **Path:** `hello-app`
