@@ -485,7 +485,7 @@ Saída esperada das secrets do repositório:
 No repositório **`hello-manifest`**, crie a seguinte estrutura:
 1. uma pasta '.github'
 2. Dentro dela, uma pasta 'workflows'
-3. Dentro dela, um arquivo chamando 'ci-cd.yaml'
+3. Dentro dela, um arquivo chamando 'pipeline.yaml'
 
 ```
 .github/
