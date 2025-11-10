@@ -179,12 +179,37 @@ Saída esperada:
 <img width="288" height="74" alt="image" src="https://github.com/user-attachments/assets/5da02613-cdaf-4ceb-8d9f-4fcdc3d1234a" />
 
 
-### `service.yaml`
+### `deployment.yaml`
 ```yaml
-# código aqui
+apiVersion: apps/v1   
+kind: Deployment      # Criando deployment
+metadata:
+  name: hello-app     # Nome do deployment
+  labels:
+    app: hello-app    
+spec:
+  replicas: 3         # Número de pods rodando
+  selector:
+    matchLabels:
+      app: hello-app 
+  strategy:
+    type: RollingUpdate  # Tipo de atualização dos pods
+    rollingUpdate:
+      maxUnavailable: 0  # Número máximo de pods fora de serviço durante atualização
+      maxSurge: 1        # Número máximo de pods extras criados durante atualização
+  template:
+    metadata:
+      labels:
+        app: hello-app  
+    spec:
+      containers:
+        - name: hello-app    # Nome do container
+          image: amevis/hello-app:sha-a37bf22ac19838460b5756eb455c024b48714da5  # Imagem Docker usada
+          ports:
+            - containerPort: 80  # Porta exposta pelo container
 ```
 
-### `deployment.yaml`
+### `service.yaml`
 ```yaml
 # código aqui
 ```
