@@ -548,9 +548,12 @@ Acesse no navegador para ver:
 
 4. Verifique no ArgoCD:
    - O app ficará **Out of Sync**
+ㅤ
+
 
 <img width="424" height="367" alt="outofsyncteste" src="https://github.com/user-attachments/assets/0c368c6e-e310-4907-81e0-9e882ef78f9d" />
 
+ㅤ
 
    - Depois sincronizará automaticamente
 
@@ -559,12 +562,18 @@ Acesse no navegador para ver:
 
 ㅤ
    - A nova mensagem aparecerá em `http://localhost:30080/`:
-ㅤ
+ㅤㅤ
+
+
 <img width="728" height="515" alt="image" src="https://github.com/user-attachments/assets/734f26fa-8da9-41fd-bdac-5d0dbac14603" />
+ㅤ
+
 ㅤ
 
   - A nova mensagem também aparecerá em `http://localhost:30080/hello/seunome`:
 ㅤ
+
+
 <img width="782" height="526" alt="image" src="https://github.com/user-attachments/assets/f242e417-e5d6-428c-923c-cdbc3bdd71d0" />
 
 
@@ -575,6 +584,6 @@ Acesse no navegador para ver:
 <img width="722" height="246" alt="image" src="https://github.com/user-attachments/assets/7e823250-7a65-4376-9561-64b8bdf4b0da" />
 ㅤ
 ㅤ
-
+ㅤ
 Obs: Você pode conseguir informações úteis sobre o funcionamento verificando os logs com `kubectl logs -l app=hello-app`
 
